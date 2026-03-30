@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapplication.vivalnkdemo"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="35" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
+
+    <!-- Request legacy Bluetooth permissions on older devices. -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <!--
+       Needed only if your app looks for Bluetooth devices.
+       If your app doesn't use Bluetooth scan results to derive physical
+       location information, you can strongly assert that your app
+       doesn't derive physical location.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" /> <!-- Needed only if your app makes the device discoverable to Bluetooth devices. -->
+    <!-- <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" /> -->
+    <!-- Needed only if your app communicates with already-paired Bluetooth devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- Needed only if your app uses Bluetooth scan results to derive physical location. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required to provide the web interface -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- For BP5S Internet communication and detect/manage Wi-Fi state -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Required to run keep-alive service when targeting API 28 or higher -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="no.nordicsemi.android.LOG" />
+
+    <permission
+        android:name="com.example.myapplication.vivalnkdemo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.myapplication.vivalnkdemo.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.myapplication.vivalnkdemo.MainActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.vivalnk.sdk.ble.ota.NotificationActivity" /> <!-- Service -->
+        <service
+            android:name="com.vivalnk.sdk.ble.dfu.DfuService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" >
+            <intent-filter>
+                <action android:name="no.nordicsemi.android.action.DFU_UPLOAD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.vivalnk.vdireaderimpl.VDIBleService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" /> <!-- //for BP5S -->
+        <service
+            android:name="com.ido.ble.bluetooth.DeviceConnectService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+        <service
+            android:name="com.ido.ble.dfu.DFUService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+        <service
+            android:name="com.vivalnk.android.support.v18.scanner.ScannerService"
+            android:exported="false" />
+        <!--
+    The receiver used to scan with PendingIntent on Android 8+.
+    It will translate results from android.bluetooth.le package to
+    no.nordicsemi.android.support.v18, apply filters or perform batching,
+    depending on the settings.
+        -->
+        <receiver
+            android:name="com.vivalnk.android.support.v18.scanner.PendingIntentReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.vivalnk.android.support.v18.ACTION_FOUND" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="androidx.room.MultiInstanceInvalidationService"
+            android:directBootAware="true"
+            android:exported="false" />
+        <!--
+		Service used to scan in background to emulate scanning with
+		PendingIntent on Android 4.3 - 7.x. Service will scan in background with given
+		settings and filters.
+        -->
+        <service
+            android:name="no.nordicsemi.android.support.v18.scanner.ScannerService"
+            android:exported="false" />
+        <!--
+		The receiver used to scan with PendingIntent on Android 8+.
+		It will translate results from android.bluetooth.le package to
+		no.nordicsemi.android.support.v18, apply filters or perform batching,
+		depending on the settings.
+        -->
+        <receiver
+            android:name="no.nordicsemi.android.support.v18.scanner.PendingIntentReceiver"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="no.nordicsemi.android.support.v18.ACTION_FOUND" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.example.myapplication.vivalnkdemo.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:directBootAware="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.DUMP" >
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

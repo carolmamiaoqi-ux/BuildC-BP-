@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">HelloVivaLINK</string>
+  <string name="intro_text">Hello, VivaLINK World!</string>
+</resources>

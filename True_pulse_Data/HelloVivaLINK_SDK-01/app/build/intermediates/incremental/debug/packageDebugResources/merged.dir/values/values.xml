@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorError">#FF0000</color>
+    <color name="colorNormal">#0000FF</color>
+    <color name="colorPASS">#00a100</color>
+    <color name="colorPrimary">#1798e8</color>
+    <color name="colorPrimaryDark">#1574c0</color>
+    <color name="colorToolbarPrimary">#FFFFFFFF</color>
+    <color name="colorToolbarPrimaryDark">@color/light_grey</color>
+    <color name="light_grey">#dddddd</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="rippelColor">#0099CC</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <string name="app_name">HelloVivaLINK</string>
+    <string name="intro_text">Hello, VivaLINK World!</string>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+    </style>
+    <style name="Log" parent="AppTheme">
+        <item name="android:typeface">monospace</item>
+
+        <item name="android:padding">@dimen/margin_medium</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+    </style>
+</resources>
